@@ -1,6 +1,6 @@
 
 library(shiny)
-library(plater)
+# library(plateMapper)
 
 ui <- fluidPage(
   tabsetPanel(type = "tabs",
@@ -16,7 +16,6 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  # TODO input$assay1
   output$debug1 <- renderPrint(input$assay1)
   output$debug2 <- renderPrint(input$assay2)
   output$debug3 <- renderPrint(input$assay3)

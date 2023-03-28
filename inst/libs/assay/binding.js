@@ -5,6 +5,17 @@ $.extend(assayInput, {
     return $(scope).find(".assayInput");
   },
   getValue: function(el) {
+    //function tableToJSON(table) {
+    //  var obj = {};
+    //  var row, rows = table.rows;
+    //  for (var i=0, iLen=rows.length; i<iLen; i++) {
+    //    row = rows[i];
+    //    obj[row.cells[0].textContent] = row.cells[1].textContent
+    //  }
+    //  return JSON.stringify(obj);
+    //}
+    //
+    //return tableToJSON($(el).find("table"));
     let tableArray =  $(el).find("table").get().map(function(row) {
       return $(row).find('td').get().map(function(cell) {
     return $(cell).find('.sortableSquare').attr('data-color');

@@ -30,7 +30,7 @@ assayInput <- function(id, levels, n_rows = 8, n_cols = 12){
            tags$div(class = "levels",
                     tags$div(class = "maker-button",
                              br(),
-                             tags$div(class="create-square", "Add New"))
+                             tags$div(class ="create-square", "Add New"))
   ),
   make_table(n_rows = n_rows, n_cols = n_cols)
   )
@@ -39,7 +39,7 @@ assayInput <- function(id, levels, n_rows = 8, n_cols = 12){
   dep1 <- htmltools::htmlDependency(
     name = "assayInput",
     version = "0.1.0",
-    src = c(file =  system.file("libs/assay", package = "plater")),
+    src = c(file =  system.file("libs/assay", package = "plateMapper")),
     script = c("assay.js", "binding.js"),
     stylesheet = "assay.css"
   )
@@ -47,7 +47,7 @@ assayInput <- function(id, levels, n_rows = 8, n_cols = 12){
   dep2 <- htmltools::htmlDependency(
     name = "jqueryui",
     version = "1.13.2",
-    src = c(file = system.file("libs/jqueryui", package = "plater")),
+    src = c(file = system.file("libs/jqueryui", package = "plateMapper")),
     script = "jquery-ui.min.js"
   )
 
