@@ -11,8 +11,18 @@ make_row <- function(lab, n_cols = 12){
 
 make_cols <- function(labels){
   tags$tr(
-    tags$td(),
+    tags$th(),
     purrr::map(labels, ~tags$th(scope = "col", .))
+  )
+}
+
+make_level <- function(color, value){
+  tags$div(
+    tags$input(value, type="text", 
+               class="levelLabel", size="6", placeholder="Type"),
+    tags$div(class = 'square', `data-color` =  color, 
+             style = paste0("background-color : ",color)
+    )
   )
 }
 
@@ -23,22 +33,75 @@ make_table <- function(n_rows = 8, n_cols = 12){
   )
 }
 
+make_table_from_matrix <- function(mat){
+  if(!is.matrix(mat)){
+    stop("Input data not rectangular")
+  }
+  
+  tbl_dim <- dim(mat)
+  
+  rows <- list()
+  for(row in 1:tbl_dim[1]){
+    rows[[row]] <- tags$tr(
+      tags$th(LETTERS[row], scope = "row"), 
+      map(mat[row,], function(cell){
+        if(is.na(cell)){
+          tags$td(class = "cell")
+        } else {
+          tags$td(class = "cell",
+                  tags$div(class = "sortableSquare",
+                           `data-color` =  cell,
+                           style = paste0("background-color : ",cell)
+                  )
+          )
+        }
+      })
+    )
+  }
+  tags$table(class = "assay-table",
+             make_cols(seq(1, tbl_dim[2])),
+             rows
+  )
+}
 
-assayInput <- function(id, levels, n_rows = 8, n_cols = 12, preload = NULL){
+
+assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
+  
+  if(is.character(table)) {
+    table <- table |> 
+      fromJSON() 
+  }
+  
+  html_table <- make_table_from_matrix(table)
+   if(!is.null(levels)){
+     levels <- levels |> 
+       map(function(lvl){
+         key = fromJSON(lvl)
+         tags$div(
+           tags$input(value = key$val, type="text",
+                      class="levelLabel", size="6", placeholder="Type"),
+           tags$div(class = 'square',
+                    `data-color` = key$color,
+                    style = paste0("background-color : ",key$color)
+           )
+         )
+         })
+   } 
+   
+ 
+  
   html <- tags$div(id= id,
                    class= "assayInput",
            tags$div(class = "levels",
+                    levels,
                     tags$div(class = "maker-button",
                              br(),
                              tags$div(class ="create-square", "Add New"))
   ),
-  make_table(n_rows = n_rows, n_cols = n_cols)
+  html_table
   )
   
-  if(!is.null(preload)){
-    browser()
-    
-  }
+ 
 
 
   dep1 <- htmltools::htmlDependency(

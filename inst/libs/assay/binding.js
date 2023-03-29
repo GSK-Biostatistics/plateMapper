@@ -7,11 +7,13 @@ $.extend(assayInput, {
   getValue: function(el) {
     // Get the color values in the table 
     let table =  $(el).find("table"); 
+    let output = new Object()
     let tableArray = $(table).find("tr").get().map(function(row) {
     return $(row).find('td').get().map(function(cell) {
        return $(cell).find('.sortableSquare').attr('data-color');
       })
     })
+    output.table = JSON.stringify(tableArray)
     
     // Get the label color combos 
     let lvl = $(el).find(".levels").children().get()
@@ -22,8 +24,11 @@ $.extend(assayInput, {
       cell.val = $(x).find(".levelLabel").get().map(x => x.value)[0]
     return cell
     })
+    output.lvlKey = lvlKey.map(x => JSON.stringify(x))
     
-  return [lvlKey.map(x => JSON.stringify(x)), JSON.stringify(tableArray)]
+    
+  //return [lvlKey.map(x => JSON.stringify(x)), JSON.stringify(tableArray)]
+  return output 
   },
 
   setValue: function(el, value) {
