@@ -1,14 +1,4 @@
 
-make_cell <- function(){
-  tags$td(class = "cell")
-}
-make_row <- function(lab, n_cols = 12){
-  tags$tr(
-    tags$th(lab, scope = "row"),
-    purrr::map(seq(1, n_cols), ~tags$td(class = "cell"))
-  )
-}
-
 make_cols <- function(labels){
   tags$tr(
     tags$th(),
@@ -98,7 +88,23 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
                              br(),
                              tags$div(class ="create-square", "Add New"))
   ),
-  html_table
+  html_table,
+   tags$script("
+               $( '.square' ).draggable({
+    helper: 'clone',
+    stop: function(){
+      // Make it properly draggable again
+      $(this).draggable();
+  }
+  })
+  
+    $('.sortableSquare').draggable({
+        stop: function(){
+          // Make it properly draggable again
+          $(this).draggable().css('left', 0).css('top', 0);
+      }
+     })
+               ")
   )
   
  

@@ -26,8 +26,6 @@ $.extend(assayInput, {
     })
     output.lvlKey = lvlKey.map(x => JSON.stringify(x))
     
-    
-  //return [lvlKey.map(x => JSON.stringify(x)), JSON.stringify(tableArray)]
   return output 
   },
 
