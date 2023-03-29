@@ -24,7 +24,7 @@ make_table <- function(n_rows = 8, n_cols = 12){
 }
 
 
-assayInput <- function(id, levels, n_rows = 8, n_cols = 12){
+assayInput <- function(id, levels, n_rows = 8, n_cols = 12, preload = NULL){
   html <- tags$div(id= id,
                    class= "assayInput",
            tags$div(class = "levels",
@@ -34,6 +34,11 @@ assayInput <- function(id, levels, n_rows = 8, n_cols = 12){
   ),
   make_table(n_rows = n_rows, n_cols = n_cols)
   )
+  
+  if(!is.null(preload)){
+    browser()
+    
+  }
 
 
   dep1 <- htmltools::htmlDependency(

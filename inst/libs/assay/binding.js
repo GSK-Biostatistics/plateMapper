@@ -5,19 +5,25 @@ $.extend(assayInput, {
     return $(scope).find(".assayInput");
   },
   getValue: function(el) {
+    // Get the color values in the table 
     let table =  $(el).find("table"); 
     let tableArray = $(table).find("tr").get().map(function(row) {
     return $(row).find('td').get().map(function(cell) {
        return $(cell).find('.sortableSquare').attr('data-color');
       })
     })
-
-   //let tableArray =  $(el).find("table").get().map(function(row) {
-   //  return $(row).find('tr').get().map(function(cell) {
-   //return $(cell).find('.sortableSquare').attr('data-color');
-   //  });
-   //})
-  return JSON.stringify(tableArray)
+    
+    // Get the label color combos 
+    let lvl = $(el).find(".levels").children().get()
+    lvl.pop()
+    let lvlKey = lvl.map(function(x){
+      let cell = new Object()
+      cell.color = $(x).find(".square").get().map(x => $(x).attr("data-color"))[0]
+      cell.val = $(x).find(".levelLabel").get().map(x => x.value)[0]
+    return cell
+    })
+    
+  return [lvlKey.map(x => JSON.stringify(x)), JSON.stringify(tableArray)]
   },
 
   setValue: function(el, value) {
