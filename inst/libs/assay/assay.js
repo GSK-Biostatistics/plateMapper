@@ -9,6 +9,11 @@ $( function() {
       $(this).draggable();
   }
   })
+  
+  // Make table selectable
+  $(".assay-table").selectable({
+    filter: 'tbody .cell'
+  });
 
 
   $( ".cell" ).droppable({
@@ -25,6 +30,7 @@ $( function() {
        $inside.removeClass('square')
        // Converts from a square to a sortable square
        $inside.addClass('sortableSquare')
+       $inside.attr("data-tooltip", $inside.attr("data-color"))
        // Adds changes back to dragged element
        $item.append($inside)
        // Adds draggable element to the cell
@@ -42,13 +48,44 @@ $( function() {
       // This replaces anything inside the square
       $(this).html($(ui.draggable));
      }
-},
+  },
    helper: 'clone'
   }),
 
+  $('.levels').on('click', '.square', function (el) {
+    
+    let parentAssay = $(this).parent().parent().parent()
+    let loc = $(parentAssay).find(".ui-selected")
+    let clickedSquare = $(this)
+
+    if(loc.length > 0){
+      loc.get().map(function(cell){
+        // Remove any exsisting squares 
+        let oldSquare = $(cell).find(".sortableSquare")
+        oldSquare.remove()
+        let newSquare = clickedSquare.clone()
+        newSquare.removeClass("square")
+        newSquare.addClass("sortableSquare")
+        newSquare.attr("data-tooltip", clickedSquare.attr("data-color"))
+        $(cell).append(newSquare)
+      })
+      // Correct the sortable Square css
+      $(".sortableSquare").draggable({
+        stop: function () {
+          // Make it properly draggable again
+          $(this).draggable().css('left', 0).css('top', 0);
+        }
+      })
+    } else {
+      console.log("nothing to click")
+    }
+    // Unselect cells
+    loc.removeClass("ui-selected")
+    
+  });
 // Div dies outside table
 //This basically works, but if you bring the div out and then back in, it has issues
-$("table").droppable({
+  $("table").droppable({
   out: function( event, ui ) {
     let self = ui;
             ui.helper.off('mouseup').on('mouseup', function () {
@@ -61,7 +98,7 @@ $("table").droppable({
 })
 
 
-$(".create-square").click(function(el){
+  $(".create-square").click(function(el){
   let currLevels = $(el.currentTarget).parent().parent()
   let colorIndex = $(currLevels).find('.square').length
   let fillColor = colors[colorIndex]
@@ -69,7 +106,7 @@ $(".create-square").click(function(el){
 
   $('<div>').append('<input type="text" class="levelLabel" size="6" placeholder="Type">').append( $('<div>', {
     'class': 'square',
-    'data-color' : fillColor
+    'data-color' : fillColor,
 }).draggable().css("background-color",fillColor)).insertBefore($(el.currentTarget).parent());
 
 
@@ -83,6 +120,10 @@ $( ".square" ).draggable({
 })
 
 });
+
+$(".sortableSquare").on("hover", function(){
+  console.log("test")
+})
 
 
 });

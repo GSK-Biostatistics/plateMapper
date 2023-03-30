@@ -17,6 +17,7 @@ td, th {
   width: 50px;
 }
 
+
 .levels {
   display: flex;
   flex-direction: row;
@@ -34,3 +35,37 @@ td, th {
   text-align: center;
   color: rgb(71, 148, 179);
 }
+
+.assay-table .ui-selected { background: Gainsboro; color: white; }
+.assay-table .ui-selecting { background: Gainsboro; opacity :0.5}
+
+
+[data-tooltip]::before {
+    /* needed - do not touch */
+    content: attr(data-tooltip);
+    position: absolute;
+    opacity: 0;
+
+    /* customizable */
+    transition: all 0.15s ease;
+    padding: 10px;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px silver;
+}
+
+[data-tooltip]:hover::before {
+    /* needed - do not touch */
+    opacity: 1;
+
+    /* customizable */
+    background: BlanchedAlmond;
+    margin-top: -20px;
+    margin-left: 20px;
+    z-index:1;
+}
+
+[data-tooltip]:not([data-tooltip-persistent])::before {
+    pointer-events: none;
+}
+

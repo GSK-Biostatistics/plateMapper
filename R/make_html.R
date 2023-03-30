@@ -40,7 +40,7 @@ make_table_from_matrix <- function(mat){
         } else {
           tags$td(class = "cell",
                   tags$div(class = "sortableSquare",
-                           `data-color` =  cell,
+                           `data-color` =  cell, `data-tooltip` = cell,
                            style = paste0("background-color : ",cell)
                   )
           )
