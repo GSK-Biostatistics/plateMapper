@@ -1,4 +1,4 @@
-td, th {
+.assayInput td, .assayInput th {
   border: 1px solid rgb(190,190,190);
   padding: 0px;
   height: 50px;
@@ -7,18 +7,18 @@ td, th {
   text-align: center;
 }
 
-.container {
+.assayInput .container {
   width: max-content;
   justify-content: left;
 }
 
-.square, .sortableSquare {
+.assayInput .square, .sortableSquare {
   height: 50px;
   width: 50px;
 }
 
 
-.levels {
+.assayInput .levels {
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -26,7 +26,7 @@ td, th {
   justify-content: left;
 }
 
-.create-square {
+.assayInput .create-square {
   border: 1px dashed rgb(71, 148, 179);
   padding: 0px;
   height: 50px;
@@ -38,9 +38,12 @@ td, th {
 
 .assay-table .ui-selected { background: Gainsboro; color: white; }
 .assay-table .ui-selecting { background: Gainsboro; opacity :0.5}
+.assay-table .ui-selected div {
+    opacity: 0.2;
+}
 
 
-[data-tooltip]::before {
+.assayInput [data-tooltip]::before {
     /* needed - do not touch */
     content: attr(data-tooltip);
     position: absolute;
@@ -54,7 +57,7 @@ td, th {
     box-shadow: 2px 2px 1px silver;
 }
 
-[data-tooltip]:hover::before {
+.assayInput [data-tooltip]:hover::before {
     /* needed - do not touch */
     opacity: 1;
 
@@ -65,7 +68,7 @@ td, th {
     z-index:1;
 }
 
-[data-tooltip]:not([data-tooltip-persistent])::before {
+.assayInput [data-tooltip]:not([data-tooltip-persistent])::before {
     pointer-events: none;
 }
 
