@@ -121,9 +121,6 @@ $( ".square" ).draggable({
 
 });
 
-$(".sortableSquare").on("hover", function(){
-  console.log("test")
-})
 
 
 });
