@@ -30,7 +30,7 @@ $( function() {
        $inside.removeClass('square')
        // Converts from a square to a sortable square
        $inside.addClass('sortableSquare')
-       $inside.attr("data-tooltip", $inside.attr("data-color"))
+       $inside.attr("data-tooltip", $inside.attr("data-val"))
        // Adds changes back to dragged element
        $item.append($inside)
        // Adds draggable element to the cell
@@ -66,7 +66,7 @@ $( function() {
         let newSquare = clickedSquare.clone()
         newSquare.removeClass("square")
         newSquare.addClass("sortableSquare")
-        newSquare.attr("data-tooltip", clickedSquare.attr("data-color"))
+        newSquare.attr("data-tooltip", clickedSquare.attr("data-val"))
         $(cell).append(newSquare)
       })
       // Correct the sortable Square css
@@ -120,6 +120,16 @@ $( ".square" ).draggable({
 })
 
 });
+
+$(".levelLabel").on('input', function(el){
+   let parentAssay = $(this).parent().parent().parent()
+   let level = $(this).parent().find('.square')
+   let dataColor = $(level).attr("data-color")
+   let dataVal = $(this).get().map(x => x.value)
+   level.attr("data-val", dataVal)
+   
+   $(parentAssay).find('.sortableSquare').filter(`[data-color ='${dataColor}']`).attr("data-tooltip", dataVal).attr("data-val", dataVal)
+})
 
 
 

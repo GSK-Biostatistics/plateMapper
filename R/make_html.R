@@ -23,10 +23,19 @@ make_table <- function(n_rows = 8, n_cols = 12){
   )
 }
 
-make_table_from_matrix <- function(mat){
+make_table_from_matrix <- function(mat, levels){
   if(!is.matrix(mat)){
     stop("Input data not rectangular")
   }
+  
+  if(!is.null(levels)){
+    levels <- map(levels, function(lvl){
+      key = fromJSON(lvl)
+      list(color = key$color, val =key$val) 
+    })
+    
+  }
+  
   
   tbl_dim <- dim(mat)
   
@@ -38,10 +47,12 @@ make_table_from_matrix <- function(mat){
         if(is.na(cell)){
           tags$td(class = "cell")
         } else {
+          decode = keep(levels, ~.$val == cell)[[1]]
           tags$td(class = "cell",
                   tags$div(class = "sortableSquare",
-                           `data-color` =  cell, `data-tooltip` = cell,
-                           style = paste0("background-color : ",cell)
+                           `data-color` =  decode$color, `data-tooltip` = cell,
+                           `data-val` = cell,
+                           style = paste0("background-color : ",decode$color)
                   )
           )
         }
@@ -62,7 +73,8 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
       fromJSON() 
   }
   
-  html_table <- make_table_from_matrix(table)
+  html_table <- make_table_from_matrix(table, levels)
+  
    if(!is.null(levels)){
      levels <- levels |> 
        map(function(lvl){
@@ -76,7 +88,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
            )
          )
          })
-   } 
+   }
    
  
   

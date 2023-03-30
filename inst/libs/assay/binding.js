@@ -10,7 +10,7 @@ $.extend(assayInput, {
     let output = new Object()
     let tableArray = $(table).find("tr").get().map(function(row) {
     return $(row).find('td').get().map(function(cell) {
-       return $(cell).find('.sortableSquare').attr('data-color');
+       return $(cell).find('.sortableSquare').attr('data-val');
       })
     })
     output.table = JSON.stringify(tableArray)
