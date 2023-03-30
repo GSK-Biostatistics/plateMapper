@@ -24,17 +24,19 @@ $( function() {
 
       if (ui.draggable.hasClass("square")) {
 
-       let $item = $(this).html($(ui.draggable).clone()); //getting the cloned item
-       let $inside = $item.find('.square')
-       // Removing the connection to the original cell
-       $inside.removeClass('square')
-       // Converts from a square to a sortable square
-       $inside.addClass('sortableSquare')
-       $inside.attr("data-tooltip", $inside.attr("data-val"))
-       // Adds changes back to dragged element
-       $item.append($inside)
-       // Adds draggable element to the cell
-       $(this).append($item);
+      let $item = $(this).html($(ui.draggable).clone()); //getting the cloned item
+      let $inside = $item.find('.square')
+      console.log($(ui.draggable))
+      // Removing the connection to the original cell
+      $inside.removeClass('square')
+      // Converts from a square to a sortable square
+      $inside.addClass('sortableSquare')
+      // Adds changes back to dragged element
+      $item.append($inside)
+      $item.attr("data-tooltip", $(ui.draggable).attr("data-val"))
+      // Adds draggable element to the cell
+      $(this).append($item);
+      
        // Correct the sortable Square css
        $(".sortableSquare").draggable({
         stop: function(){
@@ -44,6 +46,8 @@ $( function() {
      })
 
      }
+     
+     
      if (ui.draggable.hasClass("sortableSquare")) {
       // This replaces anything inside the square
       $(this).html($(ui.draggable));
@@ -122,11 +126,12 @@ $( ".square" ).draggable({
 });
 
 $(".levelLabel").on('input', function(el){
-   let parentAssay = $(this).parent().parent().parent()
-   let level = $(this).parent().find('.square')
-   let dataColor = $(level).attr("data-color")
-   let dataVal = $(this).get().map(x => x.value)
-   level.attr("data-val", dataVal)
+   let parentAssay = $(this).parent().parent().parent();
+   let level = $(this).parent().find('.square');
+   
+   let dataColor = $(level).attr("data-color");
+   let dataVal = $(this).get().map(x => x.value);
+   level.attr("data-val", dataVal);
    
    $(parentAssay).find('.sortableSquare').filter(`[data-color ='${dataColor}']`).attr("data-tooltip", dataVal).attr("data-val", dataVal)
 })
