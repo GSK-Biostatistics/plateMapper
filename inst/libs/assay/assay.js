@@ -14,6 +14,28 @@ $( function() {
      $(parentAssay).find('.sortableSquare').filter(`[data-color ='${dataColor}']`).attr("data-tooltip", dataVal).attr("data-val", dataVal)
   })
   }
+  
+  function addSquare(cellToAdd, clickedSquare){
+    // Remove any exsisting squares 
+    let oldSquare = $(cellToAdd).find(".sortableSquare")
+    oldSquare.remove()
+    // Add new square
+    let newSquare = clickedSquare.clone()
+    newSquare.removeClass("square")
+    newSquare.addClass("sortableSquare")
+    newSquare.attr("data-tooltip", clickedSquare.attr("data-val"))
+    $(cellToAdd).append(newSquare)
+        
+    // Correct the sortable Square css
+    $(".sortableSquare").draggable({
+        stop: function () {
+          // Make it properly draggable again
+          $(this).draggable().css('left', 0).css('top', 0);
+        }
+    })
+  }
+  
+  // Calling all function at setup so any uploaded bits work
   updateLabels();
 
   $( ".square" ).draggable({
@@ -36,29 +58,8 @@ $( function() {
 
     drop: function(event, ui) {
 
-      if (ui.draggable.hasClass("square")) {
-
-      let $item = $(this).html($(ui.draggable).clone()); //getting the cloned item
-      let $inside = $item.find('.square')
-      
-      // Removing the connection to the original cell
-      $inside.removeClass('square')
-      // Converts from a square to a sortable square
-      $inside.addClass('sortableSquare')
-      // Adds changes back to dragged element
-      $item.append($inside)
-      $item.attr("data-tooltip", $(ui.draggable).attr("data-val"))
-      // Adds draggable element to the cell
-      $(this).append($item);
-      
-       // Correct the sortable Square css
-       $(".sortableSquare").draggable({
-        stop: function(){
-          // Make it properly draggable again
-          $(this).draggable().css('left', 0).css('top', 0);
-      }
-     })
-
+    if (ui.draggable.hasClass("square")) {
+        addSquare($(this), $(ui.draggable))
      }
      
      
@@ -78,21 +79,7 @@ $( function() {
 
     if(loc.length > 0){
       loc.get().map(function(cell){
-        // Remove any exsisting squares 
-        let oldSquare = $(cell).find(".sortableSquare")
-        oldSquare.remove()
-        let newSquare = clickedSquare.clone()
-        newSquare.removeClass("square")
-        newSquare.addClass("sortableSquare")
-        newSquare.attr("data-tooltip", clickedSquare.attr("data-val"))
-        $(cell).append(newSquare)
-      })
-      // Correct the sortable Square css
-      $(".sortableSquare").draggable({
-        stop: function () {
-          // Make it properly draggable again
-          $(this).draggable().css('left', 0).css('top', 0);
-        }
+        addSquare($(cell), clickedSquare)
       })
     } else {
       console.log("nothing to click")
