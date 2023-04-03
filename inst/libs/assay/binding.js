@@ -6,8 +6,7 @@ $.extend(assayInput, {
   },
   getValue: function(el) {
     // Get the color values in the table 
-    let table =  $(el).find("table"); 
-    //console.log(table)
+    let table =  $(el).find(".assay-table"); 
     let output = new Object()
     let tableArray = $(table).find("tr").get().map(function(row) {
     return $(row).find('td').get().map(function(cell) {

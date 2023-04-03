@@ -1,6 +1,20 @@
 
 $( function() {
   let colors =['DarkRed','SeaGreen',"Darkorange",'dodgerblue','gold'];
+  
+  // Functions that get reused 
+  function updateLabels(){
+    $(".levelLabel").on('input', function(){
+     let parentAssay = $(this).parent().parent().parent();
+     let level = $(this).parent().find('.square');
+     let dataColor = $(level).attr("data-color");
+     let dataVal = $(this).get().map(x => x.value);
+     level.attr("data-val", dataVal);
+     
+     $(parentAssay).find('.sortableSquare').filter(`[data-color ='${dataColor}']`).attr("data-tooltip", dataVal).attr("data-val", dataVal)
+  })
+  }
+  updateLabels();
 
   $( ".square" ).draggable({
     helper: 'clone',
@@ -92,11 +106,10 @@ $( function() {
   $("table").droppable({
   out: function( event, ui ) {
     let self = ui;
-            ui.helper.off('mouseup').on('mouseup', function () {
-                $(this).remove();
-                self.draggable.remove();
-            });
-            console.log(self)
+    ui.helper.off('mouseup').on('mouseup', function () {
+      $(this).remove();
+      self.draggable.remove();
+    });
   }
 
 })
@@ -115,28 +128,19 @@ $( function() {
 
 
 
-$( ".square" ).draggable({
-  helper: 'clone',
-  stop: function(){
-    // Make it properly draggable again
-    $(this).draggable();
-}
-})
+  $( ".square" ).draggable({
+    helper: 'clone',
+    stop: function(){
+      // Make it properly draggable again
+      $(this).draggable();
+  }
+  });
+  
+  updateLabels()
 
 });
 
-$(".levelLabel").on('input', function(el){
-   let parentAssay = $(this).parent().parent().parent();
-   let level = $(this).parent().find('.square');
-   
-   let dataColor = $(level).attr("data-color");
-   let dataVal = $(this).get().map(x => x.value);
-   level.attr("data-val", dataVal);
-   
-   $(parentAssay).find('.sortableSquare').filter(`[data-color ='${dataColor}']`).attr("data-tooltip", dataVal).attr("data-val", dataVal)
-})
-
-
+  
 
 });
 
