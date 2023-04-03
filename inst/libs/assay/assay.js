@@ -26,7 +26,7 @@ $( function() {
 
       let $item = $(this).html($(ui.draggable).clone()); //getting the cloned item
       let $inside = $item.find('.square')
-      console.log($(ui.draggable))
+      
       // Removing the connection to the original cell
       $inside.removeClass('square')
       // Converts from a square to a sortable square

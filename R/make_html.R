@@ -6,15 +6,6 @@ make_cols <- function(labels){
   )
 }
 
-make_level <- function(color, value){
-  tags$div(
-    tags$input(value, type="text", 
-               class="levelLabel", size="6", placeholder="Type"),
-    tags$div(class = 'square', `data-color` =  color, 
-             style = paste0("background-color : ",color)
-    )
-  )
-}
 
 make_table <- function(n_rows = 8, n_cols = 12){
   tags$table(class = "assay-table",
@@ -33,7 +24,6 @@ make_table_from_matrix <- function(mat, levels){
       key = fromJSON(lvl)
       list(color = key$color, val =key$val) 
     })
-    
   }
   
   
@@ -84,6 +74,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
                       class="levelLabel", size="6", placeholder="Type"),
            tags$div(class = 'square',
                     `data-color` = key$color,
+                    `data-val` = key$val,
                     style = paste0("background-color : ",key$color)
            )
          )
