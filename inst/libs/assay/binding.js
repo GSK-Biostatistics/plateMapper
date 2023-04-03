@@ -40,10 +40,16 @@ $.extend(assayInput, {
   },
 
   subscribe: function (el, callback) {
-        // select the target node [0] needed to convert to a node
+    // When the level labels change 
+    $(el).on("change.levelLabel", function(){
+      callback(true);
+    });
+    
+  // Callback for when the table changes 
+    // select the target node [0] needed to convert to a node
   let target = $(el).find('table')[ 0 ];
   let oldTable = target.innerHTML
-    // create an observer instance
+  // create an observer instance
     var observer = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
         if(oldTable !== mutation.target.innerHTML){
