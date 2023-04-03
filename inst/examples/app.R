@@ -1,9 +1,6 @@
 
 library(shiny)
-library(jsonlite)
-library(purrr)
-library(tidyverse)
-# library(plateMapper)
+library(plateMapper)
 
 ui <- fluidPage(
   tabsetPanel(type = "tabs",
@@ -20,31 +17,20 @@ ui <- fluidPage(
                                                              "{\"color\":\"SeaGreen\",\"val\":\"test2\"}",
                                                              "{\"color\":\"Darkorange\",\"val\":\"\"}")
               ),
-              verbatimTextOutput("debug1"),
-              actionButton("test", "save")),
+              verbatimTextOutput("debug1")),
               tabPanel("layer 2",  assayInput("assay2"),
                        verbatimTextOutput("debug2")),
               tabPanel("Layer 3",  assayInput("assay3"),
                        verbatimTextOutput("debug3"))
-              # assayInput("assay1"),
   )
 )
 
 
 server <- function(input, output, session) {
-  output$debug1 <- renderPrint({
-    input$assay1
-  })
-  observeEvent(input$test, {
-    browser()
-    input$assay1$table 
-  })
+  output$debug1 <- renderPrint(input$assay1)
   output$debug2 <- renderPrint(input$assay2)
   output$debug3 <- renderPrint(input$assay3)
 }
 
 shinyApp(ui, server)
-# OSUICode::run_example(
-#  "input-system/dummy-app",
-#   package = "OSUICode"
-# )
+

@@ -1,19 +1,26 @@
 
+#' make columns
+#'
+#' @param labels column labels 
+#'
+#' @return html list 
+#' @importFrom purrr map
 make_cols <- function(labels){
   tags$tr(
     tags$th(),
-    purrr::map(labels, ~tags$th(scope = "col", .))
+    map(labels, ~tags$th(scope = "col", .))
   )
 }
 
 
-make_table <- function(n_rows = 8, n_cols = 12){
-  tags$table(class = "assay-table",
-    make_cols(seq(1, n_cols)),
-    purrr::map(LETTERS[1:n_rows], ~make_row(lab=.))
-  )
-}
-
+#' Make table from a matrix
+#'
+#' @param mat rectangular matrix
+#' @param levels string of the levels as a JSON 
+#'
+#' @return html list of the table 
+#' @importFrom jsonlite fromJSON
+#' @importFrom purrr map keep
 make_table_from_matrix <- function(mat, levels){
   if(!is.matrix(mat)){
     stop("Input data not rectangular")
@@ -56,6 +63,17 @@ make_table_from_matrix <- function(mat, levels){
 }
 
 
+#' assayInput
+#'
+#' @param id shiny id of the assay output
+#' @param table matrix of the table, by default an empty 96 well plate or a json
+#'   string of a matrix
+#' @param levels string of the levels to add in a JSON format by default it is
+#'   empty
+#'
+#' @export
+#' @importFrom htmltools htmlDependency
+#' @importFrom purrr map
 assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
   
   if(is.character(table)) {
@@ -113,7 +131,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
  
 
 
-  dep1 <- htmltools::htmlDependency(
+  dep1 <- htmlDependency(
     name = "assayInput",
     version = "0.1.0",
     src = c(file =  system.file("libs/assay", package = "plateMapper")),
@@ -121,7 +139,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
     stylesheet = "assay.css"
   )
 
-  dep2 <- htmltools::htmlDependency(
+  dep2 <- htmlDependency(
     name = "jqueryui",
     version = "1.13.2",
     src = c(file = system.file("libs/jqueryui", package = "plateMapper")),
