@@ -49,9 +49,7 @@ $.extend(assayInput, {
       loc.get().map(function(cell){
         addSquare($(cell), clickedSquare)
       })
-    } else {
-      console.log("nothing to click")
-    }
+    } 
     // Unselect cells
     loc.removeClass("ui-selected")
     
