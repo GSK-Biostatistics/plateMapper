@@ -4,7 +4,101 @@ $.extend(assayInput, {
   find: function(scope) {
     return $(scope).find(".assayInput");
   },
+  initialize: function(el){
+      let colors =['DarkRed','SeaGreen',"Darkorange",'dodgerblue','gold'];
+    $(el).find(".square").draggable({
+    helper: 'clone',
+    stop: function(){
+      // Make it properly draggable again
+      $(this).draggable();
+  }
+  })
   
+  // Make table selectable
+  $(el).find(".assay-table").selectable({
+    filter: 'tbody .cell'
+  });
+
+
+  $(el).find( ".cell" ).droppable({
+    accept: ".square, .sortableSquare",
+    // create a duplicate on drop
+
+    drop: function(event, ui) {
+
+    if (ui.draggable.hasClass("square")) {
+        addSquare($(this), $(ui.draggable))
+     }
+     
+     
+     if (ui.draggable.hasClass("sortableSquare")) {
+      // This replaces anything inside the square
+      $(this).html($(ui.draggable));
+     }
+  },
+   helper: 'clone'
+  }),
+
+  $(el).find('.levels').on('click', '.square', function (el) {
+    
+    let parentAssay = $(this).parent().parent().parent()
+    let loc = $(parentAssay).find(".ui-selected")
+    let clickedSquare = $(this)
+
+    if(loc.length > 0){
+      loc.get().map(function(cell){
+        addSquare($(cell), clickedSquare)
+      })
+    } else {
+      console.log("nothing to click")
+    }
+    // Unselect cells
+    loc.removeClass("ui-selected")
+    
+  });
+// Div dies outside table
+//This basically works, but if you bring the div out and then back in, it has issues
+  $(el).find("table").droppable({
+  out: function( event, ui ) {
+    let self = ui;
+    if(ui.draggable.hasClass("sortableSquare")){
+      ui.helper.off('mouseup').on('mouseup', function () {
+      $(this).remove();
+      self.draggable.remove();
+    });
+    }
+    
+  }
+
+})
+
+
+  $(el).find(".create-square").click(function(foo){
+  let currLevels = $(foo.currentTarget).parent().parent()
+  let colorIndex = $(currLevels).find('.square').length
+  let fillColor = colors[colorIndex]
+
+
+  $('<div>').append('<input type="text" class="levelLabel" size="6" placeholder="Type">').append( $('<div>', {
+    'class': 'square',
+    'data-color' : fillColor,
+}).draggable().css("background-color",fillColor)).insertBefore($(foo.currentTarget).parent());
+
+
+
+  $( ".square" ).draggable({
+    helper: 'clone',
+    stop: function(){
+      // Make it properly draggable again
+      $(this).draggable();
+  }
+  });
+  
+  updateLabels()
+
+});
+    
+  },
   getValue: function(el) {
     // Get the color values in the table 
     let table =  $(el).find(".assay-table"); 

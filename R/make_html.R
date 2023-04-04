@@ -110,7 +110,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
                              tags$div(class ="create-square", "Add New"))
   ),
   html_table,
-  includeScript(path = system.file("libs/assay/assay.js", package = "plateMapper"))
+  # includeScript(path = system.file("libs/assay/assay.js", package = "plateMapper"))
   )
   
  
