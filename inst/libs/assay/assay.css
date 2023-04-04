@@ -17,6 +17,9 @@
   width: 50px;
 }
 
+.assayInput .levelLabel {
+  width: 100px;
+}
 
 .assayInput .levels {
   display: flex;

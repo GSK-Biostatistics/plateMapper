@@ -110,22 +110,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
                              tags$div(class ="create-square", "Add New"))
   ),
   html_table,
-   tags$script("
-               $( '.square' ).draggable({
-    helper: 'clone',
-    stop: function(){
-      // Make it properly draggable again
-      $(this).draggable();
-  }
-  })
-  
-    $('.sortableSquare').draggable({
-        stop: function(){
-          // Make it properly draggable again
-          $(this).draggable().css('left', 0).css('top', 0);
-      }
-     })
-               ")
+  includeScript(path = system.file("libs/assay/assay.js", package = "plateMapper"))
   )
   
  
@@ -145,6 +130,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
     src = c(file = system.file("libs/jqueryui", package = "plateMapper")),
     script = "jquery-ui.min.js"
   )
+  
 
   return(list(html, dep1, dep2))
 

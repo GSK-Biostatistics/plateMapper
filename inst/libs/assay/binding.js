@@ -4,6 +4,7 @@ $.extend(assayInput, {
   find: function(scope) {
     return $(scope).find(".assayInput");
   },
+  
   getValue: function(el) {
     // Get the color values in the table 
     let table =  $(el).find(".assay-table"); 
