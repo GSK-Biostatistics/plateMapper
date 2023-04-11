@@ -74,7 +74,8 @@ make_table_from_matrix <- function(mat, levels){
 #' @export
 #' @importFrom htmltools htmlDependency
 #' @importFrom purrr map
-assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
+assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), 
+                       levels = NULL){
   
   if(is.character(table)) {
     table <- table |> 
@@ -109,8 +110,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), levels = NULL){
                              br(),
                              tags$div(class ="create-square", "Add New"))
   ),
-  html_table,
-  # includeScript(path = system.file("libs/assay/assay.js", package = "plateMapper"))
+  html_table
   )
   
  

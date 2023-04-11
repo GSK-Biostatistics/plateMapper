@@ -5,7 +5,7 @@ $.extend(assayInput, {
     return $(scope).find(".assayInput");
   },
   initialize: function(el){
-      let colors =['DarkRed','SeaGreen',"Darkorange",'dodgerblue','gold'];
+      let colors =['DarkRed',"Darkorange",'gold','SeaGreen','dodgerblue',"RebeccaPurple", "#AD85D6", "#70b8ff", "#75d19d", "#ffe75c", "#ffb65c", "#ff7070"];
     $(el).find(".square").draggable({
     helper: 'clone',
     stop: function(){
