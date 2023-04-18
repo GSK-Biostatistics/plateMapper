@@ -15,7 +15,8 @@ ui <- fluidPage(
                                                              [null,null,null,null,null,null,null,null,null,null,null,null]]",
                                               levels = list( "{\"color\":\"DarkRed\",\"val\":\"test1\"}",
                                                              "{\"color\":\"SeaGreen\",\"val\":\"test2\"}",
-                                                             "{\"color\":\"Darkorange\",\"val\":\"\"}")
+                                                             "{\"color\":\"Darkorange\",\"val\":\"\"}"),
+                                              edit_levels = FALSE
               ),
               verbatimTextOutput("debug1")),
               tabPanel("layer 2",  assayInput("assay2"),

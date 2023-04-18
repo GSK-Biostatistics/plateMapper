@@ -13,6 +13,32 @@ make_cols <- function(labels){
 }
 
 
+make_levels <- function(levels, edit_levels){
+  levels |> 
+    map(function(lvl){
+      key = fromJSON(lvl)
+      if(key$val != ""){
+        if(edit_levels){
+          name <- tags$input(value = key$val, type="text",
+                             class="levelLabel", size="6", placeholder="Type")
+        } else {
+          name <- tags$h5(key$val,
+                          class="levelLabel")
+        }
+        tags$div(
+          name,
+          tags$div(class = 'square',
+                   `data-color` = key$color,
+                   `data-val` = key$val,
+                   style = paste0("background-color : ",key$color)
+          )
+        )
+      } 
+      
+    })
+}
+
+
 #' Make table from a matrix
 #'
 #' @param mat rectangular matrix
@@ -63,6 +89,9 @@ make_table_from_matrix <- function(mat, levels){
 }
 
 
+
+
+
 #' assayInput
 #'
 #' @param id shiny id of the assay output
@@ -70,12 +99,15 @@ make_table_from_matrix <- function(mat, levels){
 #'   string of a matrix
 #' @param levels string of the levels to add in a JSON format by default it is
 #'   empty
+#' @param edit_levels If set to `FALSE` level names will not be editable and new
+#'   levels cannot be added. By default it will be `TRUE` so level names are
+#'   editable and new levels can be added
 #'
 #' @export
 #' @importFrom htmltools htmlDependency
 #' @importFrom purrr map
 assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), 
-                       levels = NULL){
+                       levels = NULL, edit_levels = TRUE){
   
   if(is.character(table)) {
     table <- table |> 
@@ -84,38 +116,35 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12),
   
   html_table <- make_table_from_matrix(table, levels)
   
-   if(!is.null(levels)){
-     levels <- levels |> 
-       map(function(lvl){
-         key = fromJSON(lvl)
-         tags$div(
-           tags$input(value = key$val, type="text",
-                      class="levelLabel", size="6", placeholder="Type"),
-           tags$div(class = 'square',
-                    `data-color` = key$color,
-                    `data-val` = key$val,
-                    style = paste0("background-color : ",key$color)
-           )
-         )
-         })
-   }
-   
- 
+  if(!is.null(levels)){
+    levels <- make_levels(levels, edit_levels)
+  }
+  
+  
+  if(edit_levels){
+    levels_html <- tags$div(class = "levels",
+                            levels,
+                            tags$div(class = "maker-button",
+                                     br(),
+                                     tags$div(class ="create-square", "Add New"))
+    )
+  } else {
+    levels_html <- tags$div(class = "levels",
+                            levels)
+  }
+  
+  
+  
   
   html <- tags$div(id= id,
                    class= "assayInput",
-           tags$div(class = "levels",
-                    levels,
-                    tags$div(class = "maker-button",
-                             br(),
-                             tags$div(class ="create-square", "Add New"))
-  ),
-  html_table
+                   levels_html,
+                   html_table
   )
   
- 
-
-
+  
+  
+  
   dep1 <- htmlDependency(
     name = "assayInput",
     version = "0.1.0",
@@ -123,7 +152,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12),
     script = c("assay.js", "binding.js"),
     stylesheet = "assay.css"
   )
-
+  
   dep2 <- htmlDependency(
     name = "jqueryui",
     version = "1.13.2",
@@ -131,7 +160,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12),
     script = "jquery-ui.min.js"
   )
   
-
+  
   return(list(html, dep1, dep2))
-
+  
 }
