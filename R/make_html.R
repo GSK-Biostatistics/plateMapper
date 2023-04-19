@@ -25,7 +25,7 @@ make_levels <- function(levels, edit_levels){
           name <- tags$h5(key$val,
                           class="levelLabel")
         }
-        tags$div(
+        tags$div(class = "level",
           name,
           tags$div(class = 'square',
                    `data-color` = key$color,
@@ -70,7 +70,12 @@ make_table_from_matrix <- function(mat, levels){
         if(is.na(cell)){
           tags$td(class = "cell")
         } else {
-          decode = keep(levels, ~.$val == cell)[[1]]
+          decode = keep(levels, ~.$val == cell)
+          if(length(decode) == 0){
+            stop(pate0("'", cell, "' found in table, but not in the given levels"))
+          } else {
+            decode = decode[[1]]
+          }
           tags$td(class = "cell",
                   tags$div(class = "sortableSquare",
                            `data-color` =  decode$color, `data-tooltip` = cell,

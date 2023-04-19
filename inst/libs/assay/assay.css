@@ -15,10 +15,17 @@
 .assayInput .square, .sortableSquare {
   height: 50px;
   width: 50px;
+  margin: 0 auto;
+}
+
+.level {
+    display: inline-block;
+    align-self: flex-end;
 }
 
 .assayInput .levelLabel {
   width: 100px;
+  text-align: center;
 }
 
 .assayInput .levels {
