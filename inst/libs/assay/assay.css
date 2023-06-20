@@ -18,7 +18,7 @@
   margin: 0 auto;
 }
 
-.level {
+.assayInput .level {
     display: inline-block;
     align-self: flex-end;
 }
@@ -31,8 +31,9 @@
 .assayInput .levels {
   display: flex;
   flex-direction: row;
+  inline-size: 575px; 
+  flex-wrap: wrap;
   gap: 10px;
-  margin: 7px 3px;
   justify-content: left;
 }
 
@@ -44,6 +45,18 @@
   vertical-align: middle;
   text-align: center;
   color: rgb(71, 148, 179);
+  transition: all 0.3s ease;
+}
+
+.assayInput .create-square:hover {
+  border: 1px dashed rgb(255, 255, 255);
+  background-color: rgb(71, 148, 179);
+  padding: 0px;
+  height: 50px;
+  width: 50px;
+  vertical-align: middle;
+  text-align: center;
+  color:  rgb(255, 255, 255);
 }
 
 .assay-table .ui-selected { background: Gainsboro; color: white; }
@@ -80,5 +93,33 @@
 
 .assayInput [data-tooltip]:not([data-tooltip-persistent])::before {
     pointer-events: none;
+}
+
+.assayInput .bin {
+  min-width: 75px;
+  height: 40px;
+  color: #d90429;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  align-self: flex-end;
+  outline: none;
+  border: 1px solid #d90429;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.assayInput .bin:hover {
+  color: #fff;
+  background: #d90429
+}
+
+.assayInput .input{
+  display: flex;
+  margin: 7px 3px;
+  gap: 10px;
 }
 

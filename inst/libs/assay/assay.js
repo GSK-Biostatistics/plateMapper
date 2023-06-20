@@ -2,7 +2,7 @@
 // Written outside the function so it can be used by the binding 
  function updateLabels(){
   $(".levelLabel").on('input', function(){
-    let parentAssay = $(this).parent().parent().parent();
+    let parentAssay = $(this).parent().parent().parent().parent();
     let level = $(this).parent().find('.square');
     let dataColor = $(level).attr("data-color");
     let dataVal = $(this).get().map(x => x.value);
@@ -51,7 +51,6 @@ $( function() {
     filter: 'tbody .cell'
   });
 
-
   $( ".cell" ).droppable({
     accept: ".square, .sortableSquare",
     // create a duplicate on drop
@@ -72,10 +71,10 @@ $( function() {
   }),
 
   $('.levels').on('click', '.square', function (el) {
-    
-    let parentAssay = $(this).parent().parent().parent()
+    let parentAssay = $(this).parent().parent().parent().parent()
     let loc = $(parentAssay).find(".ui-selected")
     let clickedSquare = $(this)
+    
 
     if(loc.length > 0){
       loc.get().map(function(cell){
@@ -87,6 +86,7 @@ $( function() {
     
   });
   
+
 
 });
 

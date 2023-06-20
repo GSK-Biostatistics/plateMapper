@@ -138,12 +138,20 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12),
                             levels)
   }
   
-  
-  
+  if(edit_levels){
+    bin <- tags$div(class = "bin",
+             "Remove")
+  } else {
+    bin = tags$div(class = "bin no-edit",
+                   "Remove Cells")
+  }
   
   html <- tags$div(id= id,
                    class= "assayInput",
-                   levels_html,
+                   tags$div(
+                     class = "input",
+                     levels_html,
+                   bin), 
                    html_table
   )
   

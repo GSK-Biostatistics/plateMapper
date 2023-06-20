@@ -6,7 +6,7 @@ $.extend(assayInput, {
   },
   initialize: function(el){
       let colors =['DarkRed',"Darkorange",'gold','SeaGreen','dodgerblue',"RebeccaPurple", "#AD85D6", "#70b8ff", "#75d19d", "#ffe75c", "#ffb65c", "#ff7070"];
-    $(el).find(".square").draggable({
+  $(el).find(".square").draggable({
     helper: 'clone',
     stop: function(){
       // Make it properly draggable again
@@ -37,11 +37,17 @@ $.extend(assayInput, {
      }
   },
    helper: 'clone'
-  }),
+  })
+  
+    $(el).find(".cell").on('click', ".cell", function(el) {
+     $(el.target).removeClass("ui-selected")
+     //console.log("Hit target")
+  })
+
 
   $(el).find('.levels').on('click', '.square', function (el) {
     
-    let parentAssay = $(this).parent().parent().parent()
+    let parentAssay = $(this).parent().parent().parent().parent()
     let loc = $(parentAssay).find(".ui-selected")
     let clickedSquare = $(this)
 
