@@ -101,6 +101,23 @@ $.extend(assayInput, {
   updateLabels()
 
 });
+
+$(el).find(".bin").click(function(bin){
+  let parentAssay = $(this).parent().parent().parent().parent()
+  let loc = $(parentAssay).find(".ui-selected")
+
+    if(loc.length > 0){
+      loc.get().map(function(cell){
+        removeSquare($(cell))
+      })
+    } 
+    // Unselect cells
+    loc.removeClass("ui-selected")
+  
+})
+
+
+
     
   },
   getValue: function(el) {

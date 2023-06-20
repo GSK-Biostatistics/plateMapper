@@ -12,10 +12,15 @@
   })
 }
 
+function removeSquare(cellToClear){
+   // Remove any exsisting squares 
+  let oldSquare = $(cellToClear).find(".sortableSquare")
+  oldSquare.remove()
+}
+
 function addSquare(cellToAdd, clickedSquare){
   // Remove any exsisting squares 
-  let oldSquare = $(cellToAdd).find(".sortableSquare")
-  oldSquare.remove()
+  let oldSquare = removeSquare(cellToAdd)
   // Add new square
   let newSquare = clickedSquare.clone()
   newSquare.removeClass("square")
@@ -31,6 +36,8 @@ function addSquare(cellToAdd, clickedSquare){
     }
   })
 }
+
+
 
 
 $( function() {
