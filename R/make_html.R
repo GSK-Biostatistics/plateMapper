@@ -143,7 +143,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12),
              "Remove")
   } else {
     bin = tags$div(class = "bin no-edit",
-                   "Remove Cells")
+                   "Remove")
   }
   
   html <- tags$div(id= id,
