@@ -72,7 +72,7 @@ make_table_from_matrix <- function(mat, levels){
         } else {
           decode = keep(levels, ~.$val == cell)
           if(length(decode) == 0){
-            stop(pate0("'", cell, "' found in table, but not in the given levels"))
+            stop(paste0("'", cell, "' found in table, but not in the given levels"))
           } else {
             decode = decode[[1]]
           }
