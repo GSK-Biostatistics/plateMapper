@@ -5,6 +5,7 @@
 #'
 #' @return html list 
 #' @importFrom purrr map
+#' @importFrom shiny tags
 make_cols <- function(labels){
   tags$tr(
     tags$th(),
@@ -111,6 +112,7 @@ make_table_from_matrix <- function(mat, levels){
 #' @export
 #' @importFrom htmltools htmlDependency
 #' @importFrom purrr map
+#' @importFrom shiny br
 assayInput <- function(id, table = matrix(nrow = 8, ncol = 12), 
                        levels = NULL, edit_levels = TRUE){
   
@@ -157,11 +159,10 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12),
   
   
   
-  
   dep1 <- htmlDependency(
     name = "assayInput",
     version = "0.1.0",
-    src = c(file =  system.file("libs/assay", package = "plateMapper")),
+    src = c(file =  system.file("htmlwidgets/assay", package = "plateMapper")),
     script = c("assay.js", "binding.js"),
     stylesheet = "assay.css"
   )
@@ -169,7 +170,7 @@ assayInput <- function(id, table = matrix(nrow = 8, ncol = 12),
   dep2 <- htmlDependency(
     name = "jqueryui",
     version = "1.13.2",
-    src = c(file = system.file("libs/jqueryui", package = "plateMapper")),
+    src = c(file = system.file("htmlwidgets/jqueryui", package = "plateMapper")),
     script = "jquery-ui.min.js"
   )
   
