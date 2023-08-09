@@ -4,7 +4,12 @@
 \alias{assayInput}
 \title{assayInput}
 \usage{
-assayInput(id, table = matrix(nrow = 8, ncol = 12), levels = NULL)
+assayInput(
+  id,
+  table = matrix(nrow = 8, ncol = 12),
+  levels = NULL,
+  edit_levels = TRUE
+)
 }
 \arguments{
 \item{id}{shiny id of the assay output}
@@ -14,6 +19,10 @@ string of a matrix}
 
 \item{levels}{string of the levels to add in a JSON format by default it is
 empty}
+
+\item{edit_levels}{If set to `FALSE` level names will not be editable and new
+levels cannot be added. By default it will be `TRUE` so level names are
+editable and new levels can be added}
 }
 \description{
 assayInput
