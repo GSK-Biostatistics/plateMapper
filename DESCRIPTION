@@ -2,7 +2,7 @@ Package: plateMapper
 Type: Package
 Title: Creates Shiny Modual for Mapping Assay Plates
 Version: 0.1.1
-Author: c(person(given = "Christina",
+Authors@R: c(person(given = "Christina",
              family = "Fillmore",
              role = c("aut", "cre"),
              email = "christina.e.fillmore@gsk.com",
