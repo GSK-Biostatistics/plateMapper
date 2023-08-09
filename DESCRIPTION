@@ -13,10 +13,12 @@ Author: c(person(given = "Christina",
              role = "aut",
              email = "maya.gans@atorusresearch.com",
              comment = c(ORCID = "0000-0002-5452-6089")))
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: A shinyWidget that creates adrag and drop ui for plate designs
+License: Appache 2.0
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
+Imports: 
+    htmltools,
+    jsonlite,
+    purrr
