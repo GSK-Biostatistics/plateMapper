@@ -1,6 +1,6 @@
 // Functions that get reused 
 // Written outside the function so it can be used by the binding 
- function updateLabels(){
+function updateLabels(){
   $(".levelLabel").on('input', function(){
     let parentAssay = $(this).parent().parent().parent().parent();
     let level = $(this).parent().find('.square');
@@ -39,64 +39,57 @@ function addSquare(cellToAdd, clickedSquare){
 
 
 
-
 $( function() {
-  //let colors =['DarkRed','SeaGreen',"Darkorange",'dodgerblue','gold'];
-  // Calling all function at setup so any uploaded bits work
-  updateLabels();
+let colors =['DarkRed','SeaGreen',"Darkorange",'dodgerblue','gold'];
+// Calling all function at setup so any uploaded bits work
+updateLabels();
 
-  $( ".square" ).draggable({
-    helper: 'clone',
-    stop: function(){
-      // Make it properly draggable again
-      $(this).draggable();
-  }
-  })
-  
-  // Make table selectable
-  $(".assay-table").selectable({
-    filter: 'tbody .cell'
-  });
+$( ".square" ).draggable({
+  helper: 'clone',
+  stop: function(){
+    // Make it properly draggable again
+    $(this).draggable();
+}
+})
 
-  $( ".cell" ).droppable({
-    accept: ".square, .sortableSquare",
-    // create a duplicate on drop
 
-    drop: function(event, ui) {
+$( ".cell" ).droppable({
+  accept: ".square, .sortableSquare",
+  // create a duplicate on drop
 
-    if (ui.draggable.hasClass("square")) {
-        addSquare($(this), $(ui.draggable))
-     }
-     
-     
-     if (ui.draggable.hasClass("sortableSquare")) {
-      // This replaces anything inside the square
-      $(this).html($(ui.draggable));
-     }
-  },
-   helper: 'clone'
-  }),
+  drop: function(event, ui) {
 
-  $('.levels').on('click', '.square', function (el) {
-    let parentAssay = $(this).parent().parent().parent().parent()
-    let loc = $(parentAssay).find(".ui-selected")
-    let clickedSquare = $(this)
-    
+  if (ui.draggable.hasClass("square")) {
+      addSquare($(this), $(ui.draggable))
+   }
+   
+   
+   if (ui.draggable.hasClass("sortableSquare")) {
+    // This replaces anything inside the square
+    $(this).html($(ui.draggable));
+   }
+},
+ helper: 'clone'
+}),
 
-    if(loc.length > 0){
-      loc.get().map(function(cell){
-        addSquare($(cell), clickedSquare)
-      })
-    } 
-    // Unselect cells
-    loc.removeClass("ui-selected")
-    
-  });
+$('.levels').on('click', '.square', function (el) {
+  let parentAssay = $(this).parent().parent().parent().parent()
+  let loc = $(parentAssay).find(".selected")
+  let clickedSquare = $(this)
   
 
-
+  if(loc.length > 0){
+    loc.get().map(function(cell){
+      addSquare($(cell), clickedSquare)
+    })
+  } 
+  // Unselect cells
+  loc.removeClass("selected")
+  
 });
 
 
+
+});
 
 

@@ -1,11 +1,13 @@
 let assayInput = new Shiny.InputBinding();
 
+
 $.extend(assayInput, {
   find: function(scope) {
     return $(scope).find(".assayInput");
   },
   initialize: function(el){
       let colors =['DarkRed',"Darkorange",'gold','SeaGreen','dodgerblue',"RebeccaPurple", "#AD85D6", "#70b8ff", "#75d19d", "#ffe75c", "#ffb65c", "#ff7070"];
+  
   $(el).find(".square").draggable({
     helper: 'clone',
     stop: function(){
@@ -14,12 +16,6 @@ $.extend(assayInput, {
   }
   })
   
-  // Make table selectable
-  $(el).find(".assay-table").selectable({
-    filter: 'tbody .cell'
-  });
-
-
   $(el).find( ".cell" ).droppable({
     accept: ".square, .sortableSquare",
     // create a duplicate on drop
@@ -40,7 +36,7 @@ $.extend(assayInput, {
   })
   
     $(el).find(".cell").on('click', ".cell", function(el) {
-     $(el.target).removeClass("ui-selected")
+     $(el.target).removeClass("selected")
      //console.log("Hit target")
   })
 
@@ -48,7 +44,7 @@ $.extend(assayInput, {
   $(el).find('.levels').on('click', '.square', function (el) {
     
     let parentAssay = $(this).parent().parent().parent().parent()
-    let loc = $(parentAssay).find(".ui-selected")
+    let loc = $(parentAssay).find(".selected")
     let clickedSquare = $(this)
 
     if(loc.length > 0){
@@ -57,7 +53,7 @@ $.extend(assayInput, {
       })
     } 
     // Unselect cells
-    loc.removeClass("ui-selected")
+    loc.removeClass("selected")
     
   });
 // Div dies outside table
@@ -104,7 +100,7 @@ $.extend(assayInput, {
 
 $(el).find(".bin").click(function(bin){
   let parentAssay = $(this).parent().parent().parent().parent()
-  let loc = $(parentAssay).find(".ui-selected")
+  let loc = $(parentAssay).find(".selected")
 
     if(loc.length > 0){
       loc.get().map(function(cell){
@@ -112,12 +108,98 @@ $(el).find(".bin").click(function(bin){
       })
     } 
     // Unselect cells
-    loc.removeClass("ui-selected")
+    loc.removeClass("selected")
   
 })
+  
+  const table = el.getElementsByClassName("assay-table")[0];
+  let isSelecting = false;
+  let startCell = null;
 
+   table.addEventListener('mousedown', (e) => {
+     if(e.target.classList.contains('selected')){
+       clearSelection();
+     } else if (e.target.tagName === 'TD') {
+                isSelecting = true;
+                clearSelection();
+                startCell = e.target;
+                toggleSelection(startCell);
+            } else if(e.target.classList.contains('sortableSquare')){
+              isSelecting = true;
+              clearSelection();
+              startCell = e.target.parentNode;
+                toggleSelection(startCell);
+            }
+    });
 
+     table.addEventListener('mouseover', (e) => {
+       let srqcell = e.target;
+       
+            if (isSelecting &&  e.target.tagName === 'TD') {
+                clearSelection();
+                selectCells(startCell, e.target);
+            } else if (isSelecting && srqcell.classList.contains('sortableSquare')){
+              clearSelection();
+                selectCells(startCell, e.target.parentNode);
+            }
+        });
 
+        table.addEventListener('mouseup', () => {
+            isSelecting = false;
+        });
+
+    // This works great but we need to decide how to put this in the output 
+    //   table.addEventListener('dblclick', (e) => {
+    //     let sqr = e.target;
+    //       if (sqr.classList.contains('sortableSquare')) {
+    //           sqr.contentEditable = true;
+    //           sqr.focus();
+    //       }
+    //   });
+
+    //   table.addEventListener('blur', (e) => {
+    //     let sqr = e.target;
+    //       if (sqr.classList.contains('sortableSquare')) {
+    //           sqr.contentEditable = false;
+    //       }
+    //   }, true);
+
+  // FunctionsFunctions
+       function toggleSelection(cell) {
+    cell.classList.toggle('selected');
+        }
+
+function clearSelection() {
+     const selectedCells = table.querySelectorAll('.selected');
+     selectedCells.forEach(cell => cell.classList.remove('selected'));
+        }
+
+function selectCells(start, end) {
+     const rows = table.querySelectorAll('tr');
+     const [startRow, startCol] = getCellIndex(start);
+     const [endRow, endCol] = getCellIndex(end);
+
+     const rowStart = Math.min(startRow, endRow);
+     const rowEnd = Math.max(startRow, endRow);
+     const colStart = Math.min(startCol, endCol);
+     const colEnd = Math.max(startCol, endCol);
+
+     for (let row = rowStart; row <= rowEnd; row++) {
+                for (let col = colStart; col <= colEnd; col++) {
+                    const cell = rows[row].children[col];
+                    cell.classList.add('selected');
+                }
+            }
+        }
+
+function getCellIndex(cell) {
+    const row = cell.parentElement;
+    const rowIndex = Array.from(row.parentElement.children).indexOf(row);
+    const colIndex = Array.from(row.children).indexOf(cell);
+    return [rowIndex, colIndex];
+}
+
+  
     
   },
   getValue: function(el) {

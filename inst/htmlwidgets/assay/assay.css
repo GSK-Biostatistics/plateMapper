@@ -1,3 +1,6 @@
+:root {
+  --red:#d90429;
+}
 .assayInput td, .assayInput th {
   border: 1px solid #7c7587;
   padding: 0px;
@@ -5,6 +8,13 @@
   width: 50px;
   vertical-align: middle;
   text-align: center;
+}
+
+.assayInput th {
+      user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
 }
 
 .assayInput .container {
@@ -59,11 +69,6 @@
   color:  rgb(255, 255, 255);
 }
 
-.assay-table .ui-selected { background: Gainsboro; color: white; }
-.assay-table .ui-selecting { background: Gainsboro; opacity :0.5}
-.assay-table .ui-selected div {
-    opacity: 0.2;
-}
 
 
 .assayInput [data-tooltip]::before {
@@ -98,14 +103,14 @@
 .assayInput .bin {
   min-width: 75px;
   height: 40px;
-  color: #d90429;
+  color: var(--red);
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
   align-self: flex-end;
   outline: none;
-  border: 1px solid #d90429;
+  border: 1px solid var(--red);
   background: #fff;
   display: flex;
   justify-content: center;
@@ -114,12 +119,17 @@
 
 .assayInput .bin:hover {
   color: #fff;
-  background: #d90429
+  background: var(--red);
 }
 
 .assayInput .input{
   display: flex;
   margin: 7px 3px;
   gap: 10px;
+}
+
+.assay-table .selected { background: Gainsboro; color: white; }
+.assayInput .selected div {
+    opacity: 0.2;
 }
 
