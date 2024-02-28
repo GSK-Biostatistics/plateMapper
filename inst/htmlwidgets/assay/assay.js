@@ -29,12 +29,12 @@ function addSquare(cellToAdd, clickedSquare){
   $(cellToAdd).append(newSquare)
   
   // Correct the sortable Square css
-  $(".sortableSquare").draggable({
+  /*$(".sortableSquare").draggable({
     stop: function () {
       // Make it properly draggable again
       $(this).draggable().css('left', 0).css('top', 0);
     }
-  })
+  })*/
 }
 
 
