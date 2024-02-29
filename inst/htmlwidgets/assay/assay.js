@@ -28,13 +28,6 @@ function addSquare(cellToAdd, clickedSquare){
   newSquare.attr("data-tooltip", clickedSquare.attr("data-val"))
   $(cellToAdd).append(newSquare)
   
-  // Correct the sortable Square css
-  /*$(".sortableSquare").draggable({
-    stop: function () {
-      // Make it properly draggable again
-      $(this).draggable().css('left', 0).css('top', 0);
-    }
-  })*/
 }
 
 
