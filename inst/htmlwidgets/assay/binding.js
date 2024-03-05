@@ -17,22 +17,7 @@ $.extend(assayInput, {
   })
   
   $(el).find( ".cell" ).droppable({
-    accept: ".square, .sortableSquare",
-    // create a duplicate on drop
-
-    drop: function(event, ui) {
-
-    if (ui.draggable.hasClass("square")) {
-        addSquare($(this), $(ui.draggable))
-     }
-     
-     
-     if (ui.draggable.hasClass("sortableSquare")) {
-      // This replaces anything inside the square
-      $(this).html($(ui.draggable));
-     }
-  },
-   helper: 'clone'
+    accept: ".square, .sortableSquare"
   })
   
     $(el).find(".cell").on('click', ".cell", function(el) {
